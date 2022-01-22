@@ -117,9 +117,9 @@ const HomeCom = ({fet}) => {
   
   <div className="stage text-center pt-5 pb-2">
   {onMonth ? (
-  <h3 className='mb-5'>BNK48 Members Birthday in this month</h3>
+  <h3 className='mb-5'>CGM48 Members Birthday in this month</h3>
   ) : (
-    <h3 className='mb-5'>BNK48 Members Birthday in today</h3>
+    <h3 className='mb-5'>CGM48 Members Birthday in today</h3>
   )}
   {Loaded1 ? (
       <div className='row ml-3 mr-3 justify-content-center'>
@@ -142,7 +142,7 @@ const HomeCom = ({fet}) => {
            </div>
           </Zoom>
       )) : (
-          <h6>No BNK48 member birthday in today.</h6>
+          <h6>No CGM48 member birthday in today.</h6>
       )}
       </div>
   ) : (

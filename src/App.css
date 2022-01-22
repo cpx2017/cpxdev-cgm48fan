@@ -1,0 +1,112 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+* { box-sizing: border-box; }
+.video-background {
+  background: #000;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -99;
+}
+.video-background-mob {
+  position: fixed;
+  width: 10%;
+  z-index: -99;
+}
+.video-foreground,
+.video-background iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .video-foreground { height: 300%; top: -100%; }
+  .cover { height: 300%; top: -100%; }
+  .video-foreground-mob { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .video-foreground { width: 300%; left: -100%; }
+  .cover { height: 300%; top: -100%; }
+  .video-foreground-mob { height: 300%; top: -100%; }
+}
+.cover{
+  height: 900px;
+}
+@media only screen and (max-width: 600px) {
+  .cover{
+    height: 0px;
+  }
+}
+.stage{
+  background-color: rgb(214, 214, 214);
+}
+
+.bnktheme{
+  background-color: #49C5A8 !important;
+}
+
+.bnktext{
+  color: #49C5A8 !important;
+}
+
+.grayimg {
+  filter: grayscale(80%);
+}
+
+iframe[id*="twitter-widget"] {
+  width: 500px !important; 
+}
+@media only screen and (max-width: 600px) {
+  iframe[id*="twitter-widget"] {
+    width: 100% !important; 
+  }
+}
+
+.fixedheader{
+  object-fit: cover;
+  overflow: auto;
+}
+
+.cir {
+  border-radius: 50%;
+}

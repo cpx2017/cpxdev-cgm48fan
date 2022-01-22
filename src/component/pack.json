@@ -1,0 +1,54 @@
+
+
+  {
+      "drop": [
+        {
+            "value": "-",
+            "label": "Choose Group"
+        },
+        {
+          "value": "team",
+          "label": "Theater Stage Team"
+        },
+        {
+          "value": "gen",
+          "label": "Generation"
+        }
+      ],
+      "team": [
+        {
+            "value": "-",
+            "label": "Choose Stage Team"
+        },
+        {
+          "value": "b3",
+          "label": "B Three (BIII)"
+        },
+        {
+          "value": "nv",
+          "label": "N Five (NV)"
+        },
+        {
+            "value": "under",
+            "label": "Trainee (Undergirl)"
+          }
+      ],
+      "gen": [
+        {
+            "value": "-",
+            "label": "Choose Generation"
+        },
+        {
+          "value": 1,
+          "label": "Generation 1"
+        },
+        {
+            "value": 2,
+            "label": "Generation 2"
+        },
+        {
+            "value": 3,
+          "label": "Generation 3"
+          }
+      ]
+  }

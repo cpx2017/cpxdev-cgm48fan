@@ -13,18 +13,18 @@ const API = () => {
         });
       }
       React.useEffect(() => {
-        APITest();
+        // APITest();
       }, [])
     return ( 
         <Card>
             <CardContent className={window.innerWidth > 700 ? 'pl-5 pr-5' : 'pl-2 pr-2'}>
-                <CardHeader title='API Service' subheader='Unofficial BNK48 Members Public API' />
+                <CardHeader title='API Service' subheader='Unofficial CGM48 Members Public API' />
                 <hr />
-                <p>We also serve BNK48 members profile on Public API service. Member profile contents which you see in website are using this service also. You can use it free without any authentication. Please see our <a href='https://documenter.getpostman.com/view/13721881/UVRDHRPR' target='_blank'>documentation</a> here</p>
+                <p>API Service is under developing session.</p>
                 <hr />
-                <CardActionArea className={stat === true ? 'text-success' : stat === false ? 'text-danger' : ''}>
+                {/* <CardActionArea className={stat === true ? 'text-success' : stat === false ? 'text-danger' : ''}>
                     API Service Status: {stat === true ? 'Systems are great.' : stat === false ? 'Systems is temporary down or under maintenance.' : 'Checking API status'}
-                </CardActionArea>
+                </CardActionArea> */}
             </CardContent>
         </Card>
      );

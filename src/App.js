@@ -234,7 +234,10 @@ function App() {
                 </ListItem>
                 </d>
                 <Divider />
-                <ListItem onClick={() => alert('Region mode will enhance system performance. Current region connection has been referenced by IP address')} button>
+                <ListItem onClick={() => {
+                  alert('Region mode will enhance system performance. Current region connection has been referenced by IP address')
+                  window.open('https://status.cpxdev.tk', '_blank').focus()
+                }} button>
                   <ListItemIcon>
                     <DnsIcon />
                   </ListItemIcon>

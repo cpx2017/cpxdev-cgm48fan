@@ -308,7 +308,7 @@ function App() {
 
     return (
       <div className='text-center mt-5 pt-5'>
-      <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/main/cpx-circular.svg" width="50px" className='text-center' />
+      <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/main/cgm-circular.svg" width="50px" className='text-center' />
    Welcome to CGM48 Fan Space, please wait
  </div>
     )

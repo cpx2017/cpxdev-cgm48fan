@@ -8,7 +8,7 @@ import {
   useHistory
 } from "react-router-dom";
 import { AppBar, Toolbar,Typography, IconButton, Drawer, FormControlLabel, Switch, ListItem, ListItemIcon, Divider, ListItemText,
-Card, Dialog, DialogActions, Button, DialogTitle, DialogContent, Avatar, Badge } from '@material-ui/core';
+Card, Dialog, DialogActions, Button, DialogTitle, DialogContent, Avatar, Slide } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import HomeIcon from '@material-ui/icons/Home';
@@ -26,8 +26,10 @@ import CodeIcon from '@material-ui/icons/Code';
 
 import Home from './component/home';
 import MemberList from './component/members';
+import News from './component/news';
 import MamSam from './component/memberdetail';
 import Api from './component/apisupport';
+import PageErr from './component/404'
 
 import Fet from './fetch'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
@@ -163,6 +165,7 @@ function App() {
       <div> 
           {uri != '' && (
             <BrowserRouter>
+             <Slide in={localStorage.getItem('lowgraphic') == null && window.innerWidth > 1100 ? !open : true} timeout={600} direction='down'>
             <AppBar position="sticky" className='bnktheme app-barcurve'>
                 <Toolbar>
                   {open == false && (
@@ -192,6 +195,7 @@ function App() {
                     )}
                 </Toolbar>
               </AppBar>
+              </Slide>
               <Drawer
                         className={cls.drawer}
                         variant="temporary"
@@ -221,6 +225,12 @@ function App() {
                         </ListItemIcon>
                         <ListItemText primary="Members" />
                       </ListItem>
+                      <ListItem component={Link} to='/news' button>
+                        <ListItemIcon>
+                          <ListAltIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="News" />
+                      </ListItem>
                       <ListItem onClick={() => GoElec()} button>
                         <ListItemIcon>
                           <HowToVoteIcon />
@@ -249,9 +259,11 @@ function App() {
                       </Drawer>
                             <BasicSwitch>
                             <Route exact path="/" render={() => <Home fet={Fet().ul} />} />
-                            <Route exact path="/memberlist" render={() => <MemberList fet={Fet().ul} />} />
-                            <Route exact path="/member" render={() => <MamSam fet={Fet().ul} kamio={kamin} />} />
-                            <Route exact path="/api" render={() => <Api fet={Fet().ul} />} />
+                            <Route path="/memberlist" render={() => <MemberList fet={Fet().ul} />} />
+                            <Route path="/news" render={() => <News fet={Fet().ul} />} />
+                            <Route path="/member" render={() => <MamSam fet={Fet().ul} kamio={kamin} />} />
+                            <Route path="/api" render={() => <Api fet={Fet().ul} />} />
+                            <Route exact render={() => <PageErr />} />
                           </BasicSwitch>
                       
                      

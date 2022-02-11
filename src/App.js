@@ -163,7 +163,7 @@ function App() {
       <div> 
           {uri != '' && (
             <BrowserRouter>
-            <AppBar position="sticky" className='bnktheme'>
+            <AppBar position="sticky" className='bnktheme app-barcurve'>
                 <Toolbar>
                   {open == false && (
                   <IconButton onClick={() => setOpen(true)} edge="start" color="inherit" aria-label="menu">

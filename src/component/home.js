@@ -48,9 +48,7 @@ const HomeCom = ({fet}) => {
           </div>
           ) : (
             <Fade in={true} timeout={800}>
-               <div class="">
-               <img src="https://i.scdn.co/image/ab676186000010165165395340dcd9ba036be6ed" />
-              </div>
+               <img src="https://i.scdn.co/image/ab676186000010165165395340dcd9ba036be6ed" width={window.innerWidth} />
               </Fade>
           )}
       </div>

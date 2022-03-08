@@ -41,6 +41,25 @@ function capitalizeFirstLetter(string) {
         const [kami, setKami] = React.useState(0);
         
         const [play, onPlay] = React.useState(false);
+        
+        const [GEPoster, setGEPoster] = React.useState('');
+
+       const GEdown = (mem) => {
+            fetch('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.jpg', {
+                method :'get'
+            })
+                .then(response => {
+                    if (response.status === 200 || response.status === 304) {
+                        return response.text()
+                    }
+                    throw new Error('Something went wrong');
+                })
+                .then(data => {
+                    setGEPoster('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.jpg')
+                }).catch(() => {
+                    setGEPoster('')
+                });
+        }
 
         const BirthdayCheck = (val) => {
             fetch(fet + '/bnk48/getmemberbybirth?tstamp=' + Math.floor( new Date().getTime()  / 1000), {
@@ -180,6 +199,7 @@ function capitalizeFirstLetter(string) {
             var url = new URL(url_string);
             var c = url.searchParams.get("name");
             if (c != null && c != "") {
+                GEdown(c.toLowerCase())
                 // if (localStorage.getItem("glog") != null) {
                 //     fetch(fet + '/bnk48/getFanMem?i=' + (JSON.parse(localStorage.getItem("glog")).googleId).toString()  , {
                 //       method :'get'
@@ -255,7 +275,9 @@ function capitalizeFirstLetter(string) {
                             <Fade in={true} timeout={1200} style={{ transitionDelay: 600}}>
                                 <div className='col-md mt-5 mb-5'>
                                     <h4>{item.fullnameEn[0]} {item.fullnameEn[1]} [{item.name}]</h4>
-                                   
+                                    {GEPoster != '' && (
+                                            <a href={GEPoster} target='_blank'>BNK48 12th Single General Election candiated member. Click here to download Poster<br/></a>
+                                        )}
                                     <hr />
                                     <>
                                         <h6><LocationOnIcon fontSize="small"/> {item.province}</h6>

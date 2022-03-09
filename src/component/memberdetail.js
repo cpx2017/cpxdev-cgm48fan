@@ -372,7 +372,7 @@ function capitalizeFirstLetter(string) {
                                 {item.ge != '' ? (
                                  <CardMedia
                                      component='iframe'
-                                     width={600}
+                                     height={600}
                                      src={'https://www.youtube.com/embed/' + item.ge +'?mute=1' + (window.innerWidth <= 600 ? '' : '&autoplay=1')}
                                      allowFullScreen
                                  />

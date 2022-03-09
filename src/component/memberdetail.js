@@ -363,7 +363,7 @@ function capitalizeFirstLetter(string) {
                             </Typography>
                         </Toolbar>
                         </AppBar>
-                        <div className='container mt-3'>
+                        <div className='container mt-3 pb-3'>
                         <div className='row'>
                             <div className='col-md-5'>
                                 <img src={GEPoster} width='100%' className='imgge' onDoubleClick={() => downGEPost(item.name)} />

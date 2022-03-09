@@ -368,7 +368,7 @@ function capitalizeFirstLetter(string) {
                             <div className='col-md-5'>
                                 <img src={GEPoster} width='100%' className='imgge' onDoubleClick={() => downGEPost(item.name)} />
                             </div>
-                            <div className='col-md'>
+                            <div className='col-md mt-3'>
                                 {item.ge != '' ? (
                                  <CardMedia
                                      component='iframe'

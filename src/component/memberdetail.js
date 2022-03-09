@@ -1,6 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Card, Fade, Grow, CardMedia, Typography, Zoom, Link, Breadcrumbs, Button } from '@material-ui/core';
+import { Card, Fade, Grow, CardMedia, Typography, Zoom, Link, Breadcrumbs, Button, AppBar, Toolbar, IconButton, Slide, ListItemText, List , ListItem,Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import Dialog from '@material-ui/core/Dialog';
 
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import CakeIcon from '@material-ui/icons/Cake';
@@ -16,6 +19,10 @@ import { Fireworks } from 'fireworks-js/dist/react'
 
 var pm = new Audio('https://p.scdn.co/mp3-preview/26031551568cba193fbb55d6e4dcf3eb8fb99b04?cid=774b29d4f13844c495f206cafdad9c86')
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
 const fwoptions = {
     speed: 3,
   }
@@ -29,10 +36,22 @@ const fwoptions = {
     background: 'transperent'
   }
 
+  const useStyles = makeStyles((theme) => ({
+    appBar: {
+      position: 'relative',
+    },
+    title: {
+      marginLeft: theme.spacing(2),
+      flex: 1,
+    },
+  }));
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
     const MemDetail = ({fet, kamio}) => {
+        const classes = useStyles();
+        const [open, setOpen] = React.useState(false);
         const History = useHistory()
         const [mem, setmem] = React.useState('');
         const [arr, setArr] = React.useState([]); 
@@ -43,6 +62,17 @@ function capitalizeFirstLetter(string) {
         const [play, onPlay] = React.useState(false);
         
         const [GEPoster, setGEPoster] = React.useState('');
+
+        const downGEPost = (name) => {
+            let a = document.createElement('a');
+            a.href = GEPoster;
+            a.download = name + ".jpg";
+            a.target = '_blank'
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            alert('Downloading ' + name + '.jpg')
+        }
 
        const GEdown = (mem) => {
             fetch('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.jpg', {
@@ -276,7 +306,7 @@ function capitalizeFirstLetter(string) {
                                 <div className='col-md mt-5 mb-5'>
                                     <h4>{item.fullnameEn[0]} {item.fullnameEn[1]} [{item.name}]</h4>
                                     {GEPoster != '' && (
-                                            <a href={GEPoster} target='_blank'>BNK48 12th Single General Election candiated member. Click here to download Poster<br/></a>
+                                            <a onClick={() => setOpen(true)} className='cur'>BNK48 12th Single General Election candiated member. Click here to see more!<br/></a>
                                         )}
                                     <hr />
                                     <>
@@ -322,6 +352,38 @@ function capitalizeFirstLetter(string) {
                                 </div>
                         </Fade>
                     </Card>
+                    <Dialog fullScreen open={open} onClose={() => setOpen(false)} TransitionComponent={Transition}>
+                        <AppBar className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={() => setOpen(false)} aria-label="close">
+                            <CloseIcon />
+                            </IconButton>
+                            <Typography variant="h6" className={classes.title}>
+                            BNK48 12th Single General Election Promote
+                            </Typography>
+                        </Toolbar>
+                        </AppBar>
+                        <div className='container mt-3'>
+                        <div className='row'>
+                            <div className='col-md-5'>
+                                <img src={GEPoster} width='100%' className='imgge' onDoubleClick={() => downGEPost(item.name)} />
+                            </div>
+                            <div className='col-md'>
+                                {item.ge != '' ? (
+                                 <CardMedia
+                                     component='iframe'
+                                     width={600}
+                                     src={'https://www.youtube.com/embed/' + item.ge +'?mute=1' + (window.innerWidth <= 600 ? '' : '&autoplay=1')}
+                                     allowFullScreen
+                                 />
+                                ) : (
+                                    <h5 className='mt-3'>GE Appeal Comment Video of "{item.name} CGM48" is coming soon</h5>
+                                )}
+                            
+                            </div>
+                        </div>
+                        </div>
+                    </Dialog>
                             </div>
                     </Grow>
                     ))}

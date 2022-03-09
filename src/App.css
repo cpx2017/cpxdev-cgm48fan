@@ -115,3 +115,7 @@ iframe[id*="twitter-widget"] {
   border-bottom-right-radius: 18px !important;
   border-bottom-left-radius: 18px !important;
 }
+
+.cur{
+  cursor: pointer;
+}

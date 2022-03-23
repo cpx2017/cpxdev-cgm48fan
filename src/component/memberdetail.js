@@ -66,16 +66,16 @@ function capitalizeFirstLetter(string) {
         const downGEPost = (name) => {
             let a = document.createElement('a');
             a.href = GEPoster;
-            a.download = name + ".jpg";
+            a.download = name + ".webp";
             a.target = '_blank'
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            alert('Downloading ' + name + '.jpg')
+            alert('Downloading ' + name + '.webp')
         }
 
        const GEdown = (mem) => {
-            fetch('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.jpg', {
+            fetch('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.webp', {
                 method :'get'
             })
                 .then(response => {
@@ -85,7 +85,7 @@ function capitalizeFirstLetter(string) {
                     throw new Error('Something went wrong');
                 })
                 .then(data => {
-                    setGEPoster('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.jpg')
+                    setGEPoster('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.webp')
                 }).catch(() => {
                     setGEPoster('')
                 });

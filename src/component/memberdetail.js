@@ -14,6 +14,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
+import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 
 import { Fireworks } from 'fireworks-js/dist/react'
 
@@ -340,6 +341,7 @@ function capitalizeFirstLetter(string) {
                                             Follow her:&nbsp;
                                             <a className='bnktext' href={item.follow[0]} target='_blank'><FacebookIcon/></a>
                                             <a className='bnktext' href={item.follow[1]} target='_blank'><InstagramIcon/></a>
+                                            <a className='text-light' href={'https://app.bnk48.com/members/cgm48/' + item.name.toLowerCase()} target='_blank'><PhoneIphoneIcon/></a>
                                             </>
                                         )}
                                     </>

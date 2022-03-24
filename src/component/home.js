@@ -133,7 +133,7 @@ const HomeCom = ({fet}) => {
                  />
                <CardContent>
                    <h5>{item.name}</h5>
-                   <p>Birthday: {new Date(new Date().getFullYear() + "-" + (new Date(item.birthday).getMonth() + 1)+ "-" + (new Date(item.birthday).getDate())).toDateString()}</p>
+                   <p>Birthday: {moment(new Date().getFullYear() + "-" + (new Date(item.birthday).getMonth() + 1)+ "-" + (new Date(item.birthday).getDate())).format('ddd DD MMMM YYYY')} ({new Date().getFullYear() - new Date(item.birthday).getFullYear() + ' years old'})</p>
                </CardContent>
              </CardActionArea>
               </Card> 

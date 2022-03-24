@@ -47,6 +47,13 @@ const fwoptions = {
     },
   }));
 
+  const hbdparse = [
+      "May this special day bring you endless joy and tons of precious memories!",
+      "Today is the birthday of the person who is spreading joy and positivity all around. May your birthday and your life be as wonderful as you are!",
+      "Your birthday only comes once a year, so make sure this is the most memorable one ever and have a colorful day.",
+      "Wishing you a wonderful day and all the most amazing things on your Big Day!"
+  ]
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -114,6 +121,16 @@ function capitalizeFirstLetter(string) {
             if (pm.paused) { 
                 pm.play()
                 onPlay(true)
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new window.MediaMetadata({
+                        title: 'Happy Birthday, ' + arr[0].name +'!',
+                        artist: hbdparse[Math.floor(Math.random() * 4)],
+                        artwork: [
+                            { src: arr[0].img, sizes: '500x500' },
+                        ],
+                        album: 'CGM48 Fans Space platform'
+                    });
+                }
                 var loop = setInterval(function () {
                     if (pm.paused) { 
                         clearInterval(loop)
@@ -315,7 +332,7 @@ function capitalizeFirstLetter(string) {
                                         {birthday ? (
                                             <h6><CakeIcon fontSize="small"/> Today is her birthday! ({new Date().getFullYear() - new Date(item.birthday).getFullYear() + ' years old'})</h6>
                                         ) : (
-                                            <h6><CakeIcon fontSize="small"/> {item.birthday}</h6>
+                                            <h6><CakeIcon fontSize="small"/> {moment(item.birthday).format('DD MMMM YYYY')}</h6>
                                         )}
                                         {!item.graduated && (
                                             <>

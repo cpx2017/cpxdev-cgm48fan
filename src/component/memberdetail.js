@@ -359,7 +359,7 @@ function capitalizeFirstLetter(string) {
                                             Follow her:&nbsp;
                                             <a className='bnktext' href={item.follow[0]} target='_blank'><FacebookIcon/></a>
                                             <a className='bnktext' href={item.follow[1]} target='_blank'><InstagramIcon/></a>
-                                            <a className='text-light' href={'https://app.bnk48.com/members/cgm48/' + item.name.toLowerCase()} target='_blank'><PhoneIphoneIcon/></a>
+                                            <a className='bnktext' href={'https://app.bnk48.com/members/cgm48/' + item.name.toLowerCase()} target='_blank'><PhoneIphoneIcon/></a>
                                             </>
                                         )}
                                     </>

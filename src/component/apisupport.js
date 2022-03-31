@@ -13,7 +13,7 @@ const API = () => {
         });
       }
       React.useEffect(() => {
-        // APITest();
+        APITest();
       }, [])
     return ( 
         <Card>

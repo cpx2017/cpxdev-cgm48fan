@@ -356,8 +356,9 @@ function capitalizeFirstLetter(string) {
                             <Fade in={true} timeout={1200} style={{ transitionDelay: 600}}>
                                 <div className='col-md mt-5 mb-5'>
                                     <h4>{item.fullnameEn[0]} {item.fullnameEn[1]} [{item.name}]</h4>
-                                    {GEPoster != '' && (
-                                            <a onClick={() => setOpen(true)} className='cur'>BNK48 12th Single General Election candiated member. Click here to see more!<br/></a>
+                                    {item.ge != '' && geResult.length > 0 && (
+                                            <a className='cur'>{geResult[0].rank == 1 ? 'The winner of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!' : ordinal_suffix_of(geResult[0].rank) + ' of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!'} Expected Income of {item.name} is about {numberWithCommas(geResult[0].sc * tokenrateexchange)} THB<br/>
+                                            [Approximate Exchange Rate ≈ {tokenrateexchange} THB per one token]<br/></a>
                                         )}
                                     <hr />
                                     <>

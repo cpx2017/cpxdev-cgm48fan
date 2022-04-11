@@ -83,22 +83,22 @@ function capitalizeFirstLetter(string) {
             alert('Downloading ' + name + '.webp')
         }
 
-       const GEdown = (mem) => {
-            fetch('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.webp', {
-                method :'get'
-            })
-                .then(response => {
-                    if (response.status === 200 || response.status === 304) {
-                        return response.text()
-                    }
-                    throw new Error('Something went wrong');
-                })
-                .then(data => {
-                    setGEPoster('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.webp')
-                }).catch(() => {
-                    setGEPoster('')
-                });
-        }
+    //    const GEdown = (mem) => {
+    //         fetch('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.webp', {
+    //             method :'get'
+    //         })
+    //             .then(response => {
+    //                 if (response.status === 200 || response.status === 304) {
+    //                     return response.text()
+    //                 }
+    //                 throw new Error('Something went wrong');
+    //             })
+    //             .then(data => {
+    //                 setGEPoster('https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@latest/bnk48thirdge/' + mem + '2.webp')
+    //             }).catch(() => {
+    //                 setGEPoster('')
+    //             });
+    //     }
 
         const BirthdayCheck = (val) => {
             fetch(fet + '/bnk48/getmemberbybirth?tstamp=' + Math.floor( new Date().getTime()  / 1000), {
@@ -248,7 +248,6 @@ function capitalizeFirstLetter(string) {
             var url = new URL(url_string);
             var c = url.searchParams.get("name");
             if (c != null && c != "") {
-                GEdown(c.toLowerCase())
                 // if (localStorage.getItem("glog") != null) {
                 //     fetch(fet + '/bnk48/getFanMem?i=' + (JSON.parse(localStorage.getItem("glog")).googleId).toString()  , {
                 //       method :'get'
@@ -276,10 +275,21 @@ function capitalizeFirstLetter(string) {
                         const temp =[]
                         temp.push(data.response)
                         setArr(temp)
-                        setLoaded(true)
-
+                        if (data.response.ge != "") {
+                            fetch(fet + '/bnk48/getge?rankid=' + data.response.ge, {
+                                method :'post'
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    setGE(data)
+                                    setLoaded(true)
+                                }).catch(() => {
+                                  setGE([])
+                                  setLoaded(true)
+                                })
                         BirthdayCheck(data.response.name)
                     }
+                }
                 }).catch(() => {
                     setArr([])
                     setLoaded(true)
@@ -292,6 +302,28 @@ function capitalizeFirstLetter(string) {
                 pm.pause()
             })
         }, [])
+        function numberWithCommas(x) {
+            const options = { 
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2 
+            };
+            return Number(x).toLocaleString('en', options);
+        }
+        function ordinal_suffix_of(i) {
+            var j = i % 10,
+                k = i % 100;
+            if (j == 1 && k != 11) {
+                return i + "st";
+            }
+            if (j == 2 && k != 12) {
+                return i + "nd";
+            }
+            if (j == 3 && k != 13) {
+                return i + "rd";
+            }
+            return i + "th";
+        }
+        const tokenrateexchange = 90;
         return (  
         <>
             <div className="stage pt-5 pb-2">

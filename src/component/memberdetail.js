@@ -70,6 +70,7 @@ function capitalizeFirstLetter(string) {
         
         const [play, onPlay] = React.useState(false);
         
+        const [geResult, setGE] = React.useState([]); 
         const [GEPoster, setGEPoster] = React.useState('');
 
         const downGEPost = (name) => {

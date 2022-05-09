@@ -86,7 +86,7 @@ function App() {
   const [MemberDl, setMemDl] = React.useState(false);
   const [loginLoad, setLogLoad] = React.useState(false);
   const [kamiimg, setKami] = React.useState('');
-  const [kamin, setKname] = React.useState('');
+  const [kamin, setKname] = React.useState('-');
   
   const FetchKami = (fetdata) => {
     if (localStorage.getItem("glog") != null) {
@@ -359,24 +359,23 @@ function App() {
                 Copyright {new Date().getFullYear()}, CPXDevStudio Allright Reserved
                 <br /> All CGM48 contents are licensed by Independent Artist Management (iAM). We don't affiliated with them. Please don't be to copy and modified contents for any commercial use.
               </footer>
-              </BrowserRouter>
-          )}
-          <Dialog
-            open={MemberDl}
-            onClose={() => setMemDl(false)}
-            fullWidth={true}
-            maxWidth='sm'
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">Are you sure to sign-out</DialogTitle>
-            <DialogContent>
-            {kamin != '-' ? (
+              {localStorage.getItem("glog") != null && (
+           <Dialog
+           open={localStorage.getItem("glog") != null ? MemberDl : false}
+           onClose={() => setMemDl(false)}
+           fullWidth={true}
+           maxWidth='sm'
+           aria-labelledby="alert-dialog-title"
+           aria-describedby="alert-dialog-description"
+       >
+           <DialogTitle id="alert-dialog-title">Are you sure to sign-out</DialogTitle>
+           <DialogContent>
+             {kamin != '-' ? (
            <ListItem onClick={() => window.location.href = "/member?name=" + kamin.toLowerCase()} button>
                <ListItemIcon>
                <img alt={JSON.parse(localStorage.getItem("glog")).name} src={kamiimg} className={cls.lg + ' border border-white rounded-circle cir avatarlimit'} />
              </ListItemIcon>
-             <ListItemText primary={'Your Kami-Oshi is ' + kamin + ' CGM48'} secondary='Click here to see more description of your Kami-Oshi' />
+             <ListItemText primary={'Your Kami-Oshi is ' + kamin + ' BNK48'} secondary='Click here to see more description of your Kami-Oshi' />
              </ListItem>
              ) : (
            <ListItem button>
@@ -386,27 +385,29 @@ function App() {
                        <ListItemText primary="You don't have any Kami-Oshi" secondary='Please choose your member which you love only once person.' />
                        </ListItem>
              )}
-              <ListItem className='text-info' button>
+                     <ListItem className='text-info' button>
                        <ListItemText primary='Feature will be unavaliable when you not sign in' secondary='Choose and share your Kami-Oshi member, Fandom group view and add new event' />
                      </ListItem>
-            </DialogContent>
-            <DialogActions>
-            <GoogleLogout
-            clientId={Client}
-            render={renderProps => (
-              <Button onClick={renderProps.onClick} className="text-danger">
-              Sign out
-          </Button>
-            )}
-            onLogoutSuccess={(e) => Signout(e)}
-            isSignedIn={login}
-          />
-            <Button onClick={() => setMemDl(false)} className="text-dark">
-                Close
-            </Button>
-            </DialogActions>
-        </Dialog>
-          
+           </DialogContent>
+           <DialogActions>
+           <GoogleLogout
+           clientId={Client}
+           render={renderProps => (
+             <Button onClick={renderProps.onClick} className="text-danger">
+             Sign out
+         </Button>
+           )}
+           onLogoutSuccess={(e) => Signout(e)}
+           isSignedIn={login}
+         />
+           <Button onClick={() => setMemDl(false)} className="text-dark">
+               Close
+           </Button>
+           </DialogActions>
+       </Dialog>
+        )}
+              </BrowserRouter>
+          )}
         </div> 
           )
   }

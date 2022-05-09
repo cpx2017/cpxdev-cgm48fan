@@ -2,12 +2,14 @@ import React from 'react';
 import { Typography, ListItem, Zoom, IconButton,
     Card, CardHeader, CardContent, CardMedia, Grow, Fade } from '@material-ui/core';
     import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AOS from "aos";
 
 const News = ({fet}) => {
 
     const [Loaded, setLoaded] = React.useState(false);
     const [news, setNews] = React.useState([]);
     React.useEffect(() => {
+      AOS.init({ duration: 1000 });
       document.body.scrollTop = document.documentElement.scrollTop = 0;
         fetch(fet + '/cgm48/getnews', {
             method :'get'
@@ -22,19 +24,18 @@ const News = ({fet}) => {
             setNews([])
             setLoaded(true)
         })
-        
     }, [])
 
     return ( 
         <>
-        {window.innerWidth > 800 && (
+        {window.innerWidth >1200 && (
           <div class="video-background">
            <Fade in={true} timeout={800}>
            <img src="https://i.scdn.co/image/ab676186000010165165395340dcd9ba036be6ed" width={window.innerWidth} />
               </Fade>
       </div>
         )}
-             {window.innerWidth > 800 ? (
+             {window.innerWidth >1200 ? (
             <div className="cover mt-4">
             <Grow in={true} timeout={1000}>
           <Card className="col-md-4 m-5">
@@ -54,9 +55,9 @@ const News = ({fet}) => {
             </Grow>
           </div>
           ) : (
-        <div className="bnktheme pb-5 pt-2">
+        <div className="pb-5 pt-2">
     <Grow in={true} timeout={1000}>
-  <Card className="ml-2 mr-2">
+  <Card className="bnktheme ml-2 mr-2">
       <CardContent>
         <Typography variant="h5" component="h2">
           CGM48 News
@@ -77,7 +78,7 @@ const News = ({fet}) => {
       {Loaded ? (
            <div className={window.innerWidth > 600 ? 'row pt-5 m-5' : 'row pt-4 m-2'}>
                {news.length > 0 ? news.map((item, i) => i < 30 && (
-                   <div className='col-md-12 mb-5'>
+                   <div className='col-md-12 mb-5' data-aos="zoom-in-down">
                    <Card>
                    <CardHeader
                      action={

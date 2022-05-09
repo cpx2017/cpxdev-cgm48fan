@@ -8,7 +8,7 @@ import {
   useHistory
 } from "react-router-dom";
 import { AppBar, Toolbar,Typography, IconButton, Drawer, FormControlLabel, Switch, ListItem, ListItemIcon, Divider, ListItemText,
-Card, Dialog, DialogActions, Button, DialogTitle, DialogContent, Avatar, Slide } from '@material-ui/core';
+  Dialog, DialogActions, Button, DialogTitle, DialogContent, Avatar, Badge, CardContent, CardMedia, Slide, Grow, Fade } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import HomeIcon from '@material-ui/icons/Home';
@@ -27,6 +27,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Home from './component/home';
 import MemberList from './component/members';
 import News from './component/news';
+import Offici from './component/official';
 import MamSam from './component/memberdetail';
 import Api from './component/apisupport';
 import PageErr from './component/404'
@@ -37,6 +38,14 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 const drawerWidth = 240;
 const Client = '961896647339-roenm2ee6i60ed2rhbe2sqee0unlqj0f.apps.googleusercontent.com'
 const useStyles = makeStyles((theme) => ({
+  sm: {
+    width: theme.spacing(3.8),
+    height: theme.spacing(3.8),
+  },
+  lg: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+  },
   search: {
     right: theme.spacing(1),
     position: 'absolute',
@@ -81,7 +90,7 @@ function App() {
   
   const FetchKami = (fetdata) => {
     if (localStorage.getItem("glog") != null) {
-      fetch(fetdata + '/bnk48/getFanMem?i=' + (JSON.parse(localStorage.getItem("glog")).googleId).toString()  , {
+      fetch(fetdata + '/cgm48/getFanMem?i=' + (JSON.parse(localStorage.getItem("glog")).googleId).toString()  , {
         method :'get'
     })
       .then(response => response.json())
@@ -122,20 +131,45 @@ function App() {
       if (Fet().ul !== '') {
         clearInterval(dem)
         setUri(Fet().ul)
-        // FetchKami(Fet().ul)
+        FetchKami(Fet().ul)
       }
   }, 10);
   }, [])
 
 
   const responseGoogle = (response) => {
-    setLogLoad(false)
     localStorage.setItem("glog", JSON.stringify(response.profileObj))
-    if (window.location.pathname != '/') {
-      window.location.reload();
-    }
-    setLogin(true)
-    setOpen(false)
+    fetch(Fet().ul + '/cgm48/addFanMember?i=' + (JSON.parse(localStorage.getItem("glog")).googleId).toString(), {
+      method: 'POST', // or 'PUT'
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      })
+      .then(response => response.text())
+      .then(data => {
+        if (data == "false") {
+          FetchKami(Fet().ul)
+          setLogin(true)
+          setLogLoad(false)
+          setOpen(false)
+        } else {
+          alert("System will be temporary error for a while. Please try again")
+          setLogLoad(false)
+          setMemDl(false)
+          setLogin(false)
+          localStorage.removeItem("glog")
+          setOpen(false)
+        }
+      })
+      .catch((error) => {
+          alert("System will be temporary error for a while. Please try again")
+          setLogLoad(false)
+          setMemDl(false)
+          setLogin(false)
+          localStorage.removeItem("glog")
+          setOpen(false)
+      });
   }
 
   const errorlog = (response) => {
@@ -213,23 +247,29 @@ function App() {
                       </div>
                       <Divider />
                       <d onClick={() => setOpen(false)}>
-                      <ListItem component={Link} to='/' button>
+                      <ListItem component={Link} to='/' className={window.location.pathname == '/' ? 'activeNav' : ''} button>
                         <ListItemIcon>
                           <HomeIcon />
                         </ListItemIcon>
                         <ListItemText primary="Home" />
                       </ListItem>
-                      <ListItem component={Link} to='/memberlist' button>
+                      <ListItem component={Link} to='/memberlist' className={window.location.pathname == '/memberlist' ? 'activeNav' : ''} button>
                         <ListItemIcon>
                           <PeopleIcon />
                         </ListItemIcon>
                         <ListItemText primary="Members" />
                       </ListItem>
-                      <ListItem component={Link} to='/news' button>
+                      <ListItem component={Link} to='/news' className={window.location.pathname == '/news' ? 'activeNav' : ''} button>
                         <ListItemIcon>
                           <ListAltIcon />
                         </ListItemIcon>
                         <ListItemText primary="News" />
+                      </ListItem>
+                      <ListItem component={Link} to='/officialupdate' className={window.location.pathname == '/officialupdate' ? 'activeNav' : ''} button>
+                        <ListItemIcon>
+                          <LanguageIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Official Update" />
                       </ListItem>
                       <ListItem onClick={() => GoElec()} button>
                         <ListItemIcon>
@@ -254,13 +294,61 @@ function App() {
                         </ListItemIcon>
                         <ListItemText primary={'Region: ' + Fet().nme} />
                       </ListItem>
-                      
-                      
+                      {
+                  loginLoad ? (
+                    <ListItem onClick={() => setMemDl(true)} button>
+                    <ListItemIcon>
+                    <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/main/cgm-circular.svg" width="40px" />
+                    </ListItemIcon>
+                    <ListItemText primary="Signing in" />
+                  </ListItem>
+                  ) : (
+                    <>
+                      {!login ? (
+                  <ListItem button>
+                  <ListItemIcon>
+                    <VpnKeyIcon />
+                  </ListItemIcon>
+                  <GoogleLogin
+                    clientId={Client}
+                    render={renderProps => (
+                      <ListItemText onClick={renderProps.onClick} primary="Login as Google Account" />
+                    )}
+                    onSuccess={(e) => responseGoogle(e)}
+                    onRequest={() => setLogLoad(true)}
+                    onFailure={(e) => errorlog(e)}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={login}
+                  />
+                </ListItem>
+                ) : (
+                  <ListItem onClick={() => setMemDl(true)} button>
+                  <ListItemIcon>
+                  <Badge
+                    overlap="circular"
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    badgeContent={kamiimg != '' && kamiimg != '-' ? <img src={kamiimg} data-toggle="tooltip" data-placement="top" title={"\"" + kamin + "\" is your Kami-Oshi"} className={cls.sm + ' border border-white rounded-circle cir avatarlimit'} /> : ''}
+                  >
+                    <Avatar alt={JSON.parse(localStorage.getItem("glog")).name} src={JSON.parse(localStorage.getItem("glog")).imageUrl} />
+                  </Badge>
+                  
+                  </ListItemIcon>
+                  <ListItemText primary="You're logged in" secondary={JSON.parse(localStorage.getItem("glog")).name} />
+                </ListItem>
+                )}
+                 </>
+                  )
+                }
+                
                       </Drawer>
                             <BasicSwitch>
                             <Route exact path="/" render={() => <Home fet={Fet().ul} />} />
                             <Route path="/memberlist" render={() => <MemberList fet={Fet().ul} />} />
                             <Route path="/news" render={() => <News fet={Fet().ul} />} />
+                            <Route path="/officialupdate" render={() => <Offici fet={Fet().ul} />} />
                             <Route path="/member" render={() => <MamSam fet={Fet().ul} kamio={kamin} />} />
                             <Route path="/api" render={() => <Api fet={Fet().ul} />} />
                             <Route exact render={() => <PageErr />} />
@@ -283,7 +371,24 @@ function App() {
         >
             <DialogTitle id="alert-dialog-title">Are you sure to sign-out</DialogTitle>
             <DialogContent>
-              Some feature cannot be used when you don't login.
+            {kamin != '-' ? (
+           <ListItem onClick={() => window.location.href = "/member?name=" + kamin.toLowerCase()} button>
+               <ListItemIcon>
+               <img alt={JSON.parse(localStorage.getItem("glog")).name} src={kamiimg} className={cls.lg + ' border border-white rounded-circle cir avatarlimit'} />
+             </ListItemIcon>
+             <ListItemText primary={'Your Kami-Oshi is ' + kamin + ' CGM48'} secondary='Click here to see more description of your Kami-Oshi' />
+             </ListItem>
+             ) : (
+           <ListItem button>
+               <ListItemIcon>
+                         <Avatar alt={JSON.parse(localStorage.getItem("glog")).name} src="" />
+                       </ListItemIcon>
+                       <ListItemText primary="You don't have any Kami-Oshi" secondary='Please choose your member which you love only once person.' />
+                       </ListItem>
+             )}
+              <ListItem className='text-info' button>
+                       <ListItemText primary='Feature will be unavaliable when you not sign in' secondary='Choose and share your Kami-Oshi member, Fandom group view and add new event' />
+                     </ListItem>
             </DialogContent>
             <DialogActions>
             <GoogleLogout

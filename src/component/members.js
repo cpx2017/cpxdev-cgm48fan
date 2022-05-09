@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardContent, CardMedia, TextField, Zoom, MenuItem
 import { useHistory } from 'react-router-dom';
 import vPack from './pack.json'
 import moment from 'moment'
+import AOS from "aos";
 
 const Memberlist = ({fet}) => {
 
@@ -18,6 +19,7 @@ const Memberlist = ({fet}) => {
     const [Arr, setArr] = React.useState([]);
     const [mem, setmem] = React.useState([]);
     React.useEffect(() => {
+        AOS.init({ duration: 1000 });
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         fetch(fet + '/cgm48/memberlist?tstamp=' + Math.floor( new Date().getTime()  / 1000), {
             method :'get'
@@ -41,81 +43,30 @@ const Memberlist = ({fet}) => {
     }
 
     const SearchEng = (val) => {
-        const txt = val.toLowerCase()
-        setSearch(txt)
-        if (txt == '') {
-            setmem(Arr)
-        } else {
-            const data = Arr.filter(x => (x.name.toLowerCase()).includes(txt));
-            setmem(data)
-        }
-    }
-
-    const handleChangeGroup = (event) => {
-        setFr('-')
-        setGr(event.target.value);
-        if (event.target.value == 'team') {
-            setFilter(vPack.team)
-        } else if (event.target.value == 'gen') {
-            setFilter(vPack.gen)
-        } else {
-            setFilter([])
-        }
-      };
-
-      const onSearch = () => {
-          if (seGroup != '-' && seFill != "-") {
-          setLoaded(false)
-            fetch(fet + '/cgm48/getmemberby?filter=' + seGroup + '&param=' + seFill + '&tstamp=' + Math.floor( new Date().getTime()  / 1000), {
-                method :'post'
-            })
-      .then(response => response.json())
-      .then(async data => {
-        await setArr(data.response)
-          if (search !== '') {
-            const txt = search.toLowerCase()
+        if (val !== '') {
+            const txt = val.toLowerCase()
             setSearch(txt)
-            const d = data.response.filter(x => (x.name.toLowerCase()).includes(txt));
+            const d = Arr.filter(x => (x.name.toLowerCase()).includes(txt));
             setmem(d)
           } else {
-            setmem(data.response)
-            setArr(data.response)
+            setSearch('')
+            setmem(Arr)
           }
-          setLoaded(true)
-      });
-          }
-      }
+    }
+
     
       const onReset = () => {
-        if (seGroup != '-' || seFill != "-" || search != '') {
-        setLoaded(false)
-        fetch(fet + '/bnk48/memberlist?tstamp=' + Math.floor( new Date().getTime()  / 1000), {
-            method :'get'
-        })
-            .then(response => response.json())
-            .then(data => {
-                setmem(data.response)
-                setArr(data.response)
-                setLoaded(true)
-            }).catch(() => {
-                setmem([])
-                setArr([])
-                setLoaded(true)
-            })
-            setFilter([])
-            setGr('-')
-            setFr('-')
-            setSearch('')
-        }
+        setSearch('')
+        setmem(Arr)
     }
 
     return ( 
         <>
+        <h3 className='text-center mt-4'>Members</h3>
+        <br />
         <div className="stage text-center pt-5 pb-2">
-            <h3>Members</h3>
-            <br />
-            <Card className="text-left ml-5 mr-5">
-            <TextField label="Search Member" value={search} fullWidth={true} className="m-3 col-md-10" onChange={(e) => SearchEng(e.target.value)} />
+            <Card className={"text-left " + (window.innerWidth > 700 ? 'ml-5 mr-5' : 'ml-2 mr-2')}>
+            <TextField label="Search Member" value={search} className="m-3" onChange={(e) => SearchEng(e.target.value)} />
             {/* <TextField
                 select
                 label="Choose Group"
@@ -143,19 +94,23 @@ const Memberlist = ({fet}) => {
                          </MenuItem>
                      ))}
               </TextField>
-             )}
+             )} */}
              <ButtonGroup>
-             {seGroup != '-' && seFill != '-' && (
-                 <Button className='ml-5 mt-4 mb-3' color="primary" onClick={() => onSearch()} variant="contained">Search</Button>
-             )}
-              <Button className={(seGroup != '-' && seFill != '-' ? 'ml-3' : 'ml-5') + ' mt-4 mb-3 mr-2'} color="secondary" onClick={() => onReset()} variant="contained">Reset</Button>
-             </ButtonGroup> */}
+                <Button className={'ml-5 mt-4 mb-3 mr-2'} color="secondary" onClick={() => onReset()} variant="contained">Reset</Button>
+             </ButtonGroup>
              </Card>
+             <Zoom in={mem.length > 0 ? Loaded : false}>
+             <Card className='mt-2 ml-5 mr-5'>
+                     <CardContent>
+                         Found {mem.length} matched BNK48 members
+                     </CardContent>
+                 </Card>
+             </Zoom>
+            
             {Loaded ? (
                 <div className='row ml-3 mr-3 mt-5 justify-content-center'>
                 {mem.length > 0 ? mem.map((item, i) => (
-                    <Zoom in={true} timeout={150} style={{ transitionDelay: (i * 150)-150 }}>
-                         <div className='col-md-3 mb-5' onClick={() => ChangeRoute(item.name)}>
+                      <div data-aos="zoom-in" className='col-md-3 mb-5' onClick={() => ChangeRoute(item.name)}>
                         <Card>
                             <CardActionArea>
                             <CardMedia
@@ -169,7 +124,6 @@ const Memberlist = ({fet}) => {
                                 </CardActionArea>
                                 </Card> 
                             </div>
-                    </Zoom>
                    
                 )) : (
                     <div className='text-center col-md-12'>

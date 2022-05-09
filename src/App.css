@@ -119,3 +119,104 @@ iframe[id*="twitter-widget"] {
 .cur{
   cursor: pointer;
 }
+
+.grayimg {
+  filter: grayscale(80%);
+}
+
+iframe[id*="twitter-widget"] {
+  width: 500px !important; 
+}
+@media only screen and (max-width: 600px) {
+  iframe[id*="twitter-widget"] {
+    width: 100% !important; 
+  }
+}
+
+.fixedheader{
+  object-fit: cover;
+  overflow: auto;
+}
+
+.cir {
+  border-radius: 50%;
+}
+
+#chartdiv {
+  width: 100%;
+  height: 700px;
+}
+
+.border-5 {
+  border-width:3px !important;
+}
+
+.nl {
+  white-space: pre-line
+}
+
+.app-barcurve {
+  border-bottom-right-radius: 18px !important;
+  border-bottom-left-radius: 18px !important;
+}
+
+.swal2-container {
+  z-index: 100000;
+}
+
+.cur{
+  cursor: pointer;
+}
+.pt-10{
+  margin-top: 5% !important;
+}
+.tw{
+  white-space: pre-line !important;
+}
+.activeNav{
+  background-color: #49C5A8 !important;
+}
+.centerGE{
+  background-color: gold;
+  color: #000;
+}
+.senGE{
+  background-color: lightblue;
+  color: #fff;
+}
+.nextGE{
+  background-color: limegreen;
+  color: #fff;
+}
+.avatarlimit{
+  object-fit:contain;
+}
+
+
+@keyframes up-right {
+  0% {
+      transform: scale(1);
+      opacity: .0
+  }
+  50% {
+      transform: scale (1, 5);
+      opacity: 1;
+  }
+  100% {
+      transform: scale(1);
+      opacity: .0;
+  }
+}
+.circleload {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  opacity: .0;
+}
+.redload {
+  background-color: red;
+  -webkit-animation: up-right 1.5s infinite;
+  -moz-animation: up-right 1.5s infinite;
+  -o-animation: up-right 1.5s infinite;
+  animation: up-right 1.5s infinite;
+}

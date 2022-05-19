@@ -198,7 +198,7 @@ function App() {
 
       <div> 
           {uri != '' && (
-            <BrowserRouter>
+            <>
              <Slide in={localStorage.getItem('lowgraphic') == null && window.innerWidth > 1100 ? !open : true} timeout={600} direction='down'>
             <AppBar position="sticky" className='bnktheme app-barcurve'>
                 <Toolbar>
@@ -207,7 +207,7 @@ function App() {
                     <MenuIcon />
                   </IconButton>
                   )}
-                  <div onClick={()=> window.location.href = "/"}>
+                  <div onClick={()=> History.push('/')}>
                     <Typography variant='h5' className='title'>
                      CGM48 Fans Space
                     </Typography>
@@ -405,7 +405,7 @@ function App() {
            </DialogActions>
        </Dialog>
         )}
-              </BrowserRouter>
+              </>
           )}
         </div> 
           )

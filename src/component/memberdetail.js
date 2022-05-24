@@ -357,7 +357,7 @@ function capitalizeFirstLetter(string) {
         return (  
         <>
             <div className="pt-5 pb-2">
-                <h3 className={window.innerWidth > 600 ? ' ml-5' : ' ml-3'}>{mem != '' ? 'About ' + capitalizeFirstLetter(mem) + ' BNK48' : 'Fetching Header'}</h3>
+                <h3 className={window.innerWidth > 600 ? ' ml-5' : ' ml-3'}>{mem != '' ? 'About ' + capitalizeFirstLetter(mem) + ' CGM48' : 'Fetching Header'}</h3>
                 <Breadcrumbs className={window.innerWidth > 600 ? ' ml-5' : ' ml-3'} aria-label="breadcrumb">
                     <Link color="inherit" onClick={() => History.push("/memberlist")}>
                         Members

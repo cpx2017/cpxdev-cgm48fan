@@ -374,7 +374,7 @@ function App() {
                <ListItemIcon>
                <img alt={JSON.parse(localStorage.getItem("glog")).name} src={kamiimg} className={cls.lg + ' border border-white rounded-circle cir avatarlimit'} />
              </ListItemIcon>
-             <ListItemText primary={'Your Kami-Oshi is ' + kamin + ' BNK48'} secondary='Click here to see more description of your Kami-Oshi' />
+             <ListItemText primary={'Your Kami-Oshi is ' + kamin + ' CGM48'} secondary='Click here to see more description of your Kami-Oshi' />
              </ListItem>
              ) : (
            <ListItem button>

@@ -385,7 +385,7 @@ function capitalizeFirstLetter(string) {
                                 <div className='col-md mt-5 mb-5'>
                                     <h4>{item.fullnameEn[0]} {item.fullnameEn[1]} [{item.name}]</h4>
                                         {item.ge != '' && geResult.length > 0 && (
-                                            <a className='cur'>{geResult[0].rank == 1 ? 'The winner of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!' : ordinal_suffix_of(geResult[0].rank) + ' of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!'}<br/></a>
+                                            <a className='cur' href="https://bnk48fan.cpxdev.tk/ge3">{geResult[0].rank == 1 ? 'The winner of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!' : ordinal_suffix_of(geResult[0].rank) + ' of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!'}<br/></a>
                                         )}
                                     <Button onClick={() => Subsc(mem)} className={(kami == 1 ? 'bg-primary' : 'text-dark') + ' mt-3'} variant="contained" disabled={kami == 1 ? false : true}>{kami == 0 && <img className='pb-1' src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/main/cgm-circular.svg" width="20px" />} {kami == 2 ? "She's your Kami-Oshi" : kami == 1 ? 'Set as Kami-Oshi' : 'Loading Status'}</Button> 
                                     <hr />
@@ -396,12 +396,12 @@ function capitalizeFirstLetter(string) {
                                         ) : (
                                             <h6><CakeIcon fontSize="small"/> {moment(item.birthday).format('DD MMMM YYYY')}</h6>
                                         )}
-                                        {/* {!item.graduated && (
+                                        {!item.graduated && (
                                             <>
-                                            <p><GroupIcon fontSize="small"/> {item.team}</p>
+                                            <p><GroupIcon fontSize="small"/> {item.team != ''?item.team : 'TBA'}</p>
                                             <p><AccountCircleIcon fontSize="small"/> {ordinal_suffix_of(item.gen)} Generation</p>
                                             </>
-                                        )} */}
+                                        )}
                                         <p><FavoriteIcon fontSize="small"/>&nbsp;
                                             {
                                                 item.favorite.length > 0 ? item.favorite.map((its, i) => i == item.favorite.length - 1 ? its : its + ', ') : 'None'

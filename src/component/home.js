@@ -45,11 +45,11 @@ const HomeCom = ({fet}) => {
           <div class="video-background">
           {localStorage.getItem('lowgraphic') == null ? (
             <div class="video-foreground">
-            <iframe src="https://www.youtube.com/embed/BWDfOgXnXxw?autoplay=1&mute=1&controls=0&loop=1&playlist=BWDfOgXnXxw" frameborder="0"></iframe>
+            <iframe src="https://www.youtube.com/embed/Wb_4uhAEaSc?autoplay=1&mute=1&controls=0&loop=1&playlist=Wb_4uhAEaSc" frameborder="0"></iframe>
           </div>
           ) : (
             <Fade in={true} timeout={800}>
-               <img src="https://i.scdn.co/image/ab676186000010165165395340dcd9ba036be6ed" width={window.innerWidth} />
+               <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/makmain.webp" width={window.innerWidth} />
               </Fade>
           )}
       </div>

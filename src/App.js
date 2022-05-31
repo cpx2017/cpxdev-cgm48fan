@@ -158,10 +158,8 @@ function App() {
       if (Fet().ul !== '') {
         clearInterval(dem)
         var timeo = setInterval(function(){ 
-          if (sessionStorage.getItem('ads') != null) {
-            clearInterval(timeo)
-            setAllDone(true)
-          }
+          clearInterval(timeo)
+          setAllDone(true)
         }, 4500);
         setUri(Fet().ul)
         FetchKami(Fet().ul)

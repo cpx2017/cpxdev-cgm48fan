@@ -10,7 +10,7 @@ import {
 import { AppBar, Toolbar,Typography, IconButton, Drawer, FormControlLabel, Switch, ListItem, ListItemIcon, Divider, ListItemText,
   Dialog, DialogActions, Button, DialogTitle, DialogContent, Avatar, Badge, CardContent, CardMedia, Slide, Grow, Fade } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-
+import { Alert, AlertTitle } from '@material-ui/lab';
 import HomeIcon from '@material-ui/icons/Home';
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -65,6 +65,14 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  fabButton: {
+    position: 'fixed',
+    zIndex: 1000,
+    bottom: 30,
+    left: window.innerWidth > 600 ? 100 : 20,
+    width: "auto",
+    right: window.innerWidth > 600 ? 100 : 20,
+  },
 }));
 
 const SmallAvatar = withStyles((theme) => ({
@@ -87,6 +95,9 @@ function App() {
   const [loginLoad, setLogLoad] = React.useState(false);
   const [kamiimg, setKami] = React.useState('');
   const [kamin, setKname] = React.useState('-');
+  const [allDone, setAllDone] = React.useState(false);
+  const [styleFade, setSty] = React.useState(0);
+  const [geready, setReadyGE] = React.useState(false);
   
   const FetchKami = (fetdata) => {
     if (localStorage.getItem("glog") != null) {
@@ -127,9 +138,31 @@ function App() {
     } else {
       setLogin(true)
     }
+    function isOdd() {
+      const ran = Math.floor((Math.random() * 1000) + 1);
+      return Math.abs(ran % 2) == 1;
+   }
+   
+    setSty(isOdd() == true ? 2 :1)
+    if (localStorage.getItem("lowgraphic") == null) {
+      setReduce(false)
+    } else {
+      setReduce(true)
+    }
+    if (localStorage.getItem("glog") == null) {
+      setLogin(false)
+    } else {
+      setLogin(true)
+    }
     var dem = setInterval(function(){ 
       if (Fet().ul !== '') {
         clearInterval(dem)
+        var timeo = setInterval(function(){ 
+          if (sessionStorage.getItem('ads') != null) {
+            clearInterval(timeo)
+            setAllDone(true)
+          }
+        }, 4500);
         setUri(Fet().ul)
         FetchKami(Fet().ul)
       }
@@ -192,10 +225,8 @@ function App() {
     window.open('//bnk48fan.cpxdev.tk/ge3', '_blank').focus();
   }
 
-  if (uri != '') {
+  if (uri != '' && allDone) {
     return (
- 
-
       <div> 
           {uri != '' && (
             <>
@@ -411,12 +442,148 @@ function App() {
           )
   }
 
-    return (
-      <div className='text-center mt-5 pt-5'>
-      <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/main/cgm-circular.svg" width="50px" className='text-center' />
-   Welcome to CGM48 Fan Space, please wait
- </div>
-    )
+  return (
+    <div className="container mt-5 mb-5">
+      {window.innerWidth > 900 ? (
+         <div className="row" onDoubleClick={() => setAllDone(true)}>
+         <Fade in={styleFade != 0 ? true : false} timeout={400} style={{ transitionDelay: styleFade == 2 ? 0 : 500 }}>
+           <div className="col pr-0">
+               <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/pc/1.webp" width="100%" />
+           </div>
+         </Fade>
+         <Fade in={styleFade != 0 ? true : false}  timeout={400} style={{ transitionDelay: styleFade == 2 ? 300 : 400 }}>
+           <div className="col p-0">
+               <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/pc/2.webp" width="100%" />
+           </div>
+         </Fade>
+         <Fade in={styleFade != 0 ? true : false}  timeout={400} style={{ transitionDelay: styleFade == 2 ? 400 : 300 }}>
+           <div className="col p-0">
+               <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/pc/3.webp" width="100%" />
+           </div>
+         </Fade>
+           <Fade in={styleFade != 0 ? true : false}  timeout={400} style={{ transitionDelay: styleFade == 2 ? 500 :  0 }}>
+           <div className="col pl-0">
+               <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/pc/4.webp" width="100%" />
+           </div>
+         </Fade>
+         <Grow in={uri != '' && geready ? true : false} timeout={1000}>
+         <div className={cls.fabButton}>
+             <Alert severity="info">
+             <AlertTitle>Heal your energy with CGM48 "Maeshika Mukanee" on both Youtube Music Video and Music Streaming Platform</AlertTitle>
+               Double click or tap on image to skip this page
+             </Alert>
+             </div>
+         </Grow>
+         <Grow in={uri != '' && !geready ? true : false} timeout={1000}>
+         <div className={cls.fabButton}>
+             <Alert severity="info">
+             <AlertTitle>Heal your energy with CGM48 "Maeshika Mukanee" on both Youtube Music Video and Music Streaming Platform</AlertTitle>
+                     Double click/tap here on image or wait 5 seconds to skip this page
+             </Alert>
+             </div>
+         </Grow>
+       </div>
+      ) : (
+        <div className="row" onDoubleClick={() => setAllDone(true)}>
+        <Fade in={styleFade != 0 ? true : false} timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 0 : 350 }}>
+          <div className="col pr-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/1.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1250 : 450 }}>
+          <div className="col p-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/2.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1350 : 550 }}>
+          <div className="col pl-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/3.webp" width="100%" />
+          </div>
+        </Fade>
+          <div className="w-100"></div>
+          <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 250 :  650 }}>
+          <div className="col pr-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/4.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1150 :  750 }}>
+          <div className="col p-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/5.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1450 :  850 }}>
+          <div className="col pl-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/6.webp" width="100%" />
+          </div>
+        </Fade>
+          <div className="w-100"></div>
+          <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 350 :  950 }}>
+          <div className="col pr-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/7.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1050 :  1050 }}>
+          <div className="col p-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/8.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1550 :  1150 }}>
+          <div className="col pl-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/9.webp" width="100%" />
+          </div>
+        </Fade>
+          <div className="w-100"></div>
+          <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 450 :  1250 }}>
+          <div className="col pr-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/10.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 950 :  1350 }}>
+          <div className="col p-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/11.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1650 :  1450 }}>
+          <div className="col pl-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/12.webp" width="100%" />
+          </div>
+        </Fade>
+          <div className="w-100"></div>
+          <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 550 :  1550 }}>
+          <div className="col pr-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/13.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 850 :  1650 }}>
+          <div className="col p-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/14.webp" width="100%" />
+          </div>
+        </Fade>
+        <Fade in={styleFade != 0 ? true : false}  timeout={styleFade == 2 ? 300 : 500} style={{ transitionDelay: styleFade == 2 ? 1650 :  1450 }}>
+          <div className="col pl-0">
+              <img src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/cgm48/phone/15.webp" width="100%" />
+          </div>
+        </Fade>
+        <Grow in={uri != '' && geready ? true : false} timeout={1000}>
+        <div className={cls.fabButton}>
+            <Alert severity="info">
+              <AlertTitle>Heal your energy with CGM48 "Maeshika Mukanee" on both Youtube Music Video and Music Streaming Platform</AlertTitle>
+              Double click or tap on image to skip this page
+            </Alert>
+            </div>
+        </Grow>
+        <Grow in={uri != '' && !geready ? true : false} timeout={1000}>
+        <div className={cls.fabButton}>
+            <Alert severity="info">
+            <AlertTitle>Heal your energy with CGM48 "Maeshika Mukanee" on both Youtube Music Video and Music Streaming Platform</AlertTitle>
+                    Double click/tap here on image or wait 5 seconds to skip this page
+            </Alert>
+            </div>
+        </Grow>
+      </div>
+      )}
+</div>
+  )
 }
 
 export default App;

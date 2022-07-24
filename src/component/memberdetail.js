@@ -67,7 +67,7 @@ function capitalizeFirstLetter(string) {
         const History = useHistory()
         const [mem, setmem] = React.useState('');
         const [arr, setArr] = React.useState([]); 
-        const [geResult, setGE] = React.useState([]); 
+        const [geResult, setGE] = React.useState(null); 
         const [Loaded, setLoaded] = React.useState(false);
         const [birthday, setBirthday] = React.useState(false);
         const [kami, setKami] = React.useState(0);
@@ -309,7 +309,7 @@ function capitalizeFirstLetter(string) {
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    setGE(data)
+                                    setGE(data.response)
                                     setLoaded(true)
                                 }).catch(() => {
                                   setGE([])
@@ -384,8 +384,8 @@ function capitalizeFirstLetter(string) {
                             <Fade in={true} timeout={1200} style={{ transitionDelay: 600}}>
                                 <div className='col-md mt-5 mb-5'>
                                     <h4>{item.fullnameEn[0]} {item.fullnameEn[1]} [{item.name}]</h4>
-                                        {item.ge != '' && geResult.length > 0 && (
-                                            <a className='cur' href="https://bnk48fan.cpxdev.tk/ge3">{geResult[0].rank == 1 ? 'The winner of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!' : ordinal_suffix_of(geResult[0].rank) + ' of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult[0].sc) + ' tokens!'}<br/></a>
+                                        {item.ge != null && (
+                                            <a className='cur' href="https://bnk48fan.cpxdev.tk/ge3">{geResult.rank == 1 ? 'The winner of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult.score) + ' tokens!' : ordinal_suffix_of(geResult.rank) + ' of BNK48 12th Single Senbutsu General Election by ' + numberWithCommas(geResult.score) + ' tokens!'}<br/></a>
                                         )}
                                     <Button onClick={() => Subsc(mem)} className={(kami == 1 ? 'bg-primary' : 'text-dark') + ' mt-3'} variant="contained" disabled={kami == 1 ? false : true}>{kami == 0 && <img className='pb-1' src="https://cdn.jsdelivr.net/gh/cpx2017/cpxcdnbucket@main/main/cgm-circular.svg" width="20px" />} {kami == 2 ? "She's your Kami-Oshi" : kami == 1 ? 'Set as Kami-Oshi' : 'Loading Status'}</Button> 
                                     <hr />
